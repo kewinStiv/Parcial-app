@@ -1,36 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      CRUD SQLite
+      Taller 3er corte Karolina Bolivar - Kewin Valbuena
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   
-  <!-- Formulario para añadir un elemento -->
+  <!-- Formulario para añadir un producto -->
   <ion-item>
-    <ion-input label="Lenguaje de programacion: " [(ngModel)]="language" name="language"></ion-input>
+    <ion-input label="Ingrese el producto: " [(ngModel)]="producto" name="producto"></ion-input>
     <ion-button (click)="create()">
       <ion-icon name="add-outline"></ion-icon>
     </ion-button>
   </ion-item>
 
-  <!-- Lista de todos los elementos -->
+  <!-- Lista de todos los productos en SQLite -->
   <ion-list>
-    <ion-item-sliding *ngFor="let language of languages">
+    <ion-item-sliding *ngFor="let producto of productos">
 
-      <!-- elemento -->
+      <!-- producto -->
       <ion-item>
-        <ion-label>{{language}}</ion-label>
+        <ion-label>{{producto}}</ion-label>
       </ion-item>
 
-      <!-- opciones -->
+      <!-- actualizar y eliminar -->
       <ion-item-options>
-        <ion-item-option color="warning" (click)="update(language)">
+        <ion-item-option color="secondary" (click)="update(producto)">
           <ion-icon name="pencil-outline" slot="icon-only"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="danger" (click)="delete(language)">
+        <ion-item-option color="danger" (click)="delete(producto)">
           <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
         </ion-item-option>
       </ion-item-options>

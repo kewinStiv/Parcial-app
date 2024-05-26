@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { SqliteService } from '../services/sqlite.service';
 
 @Component({
@@ -8,14 +9,15 @@ import { SqliteService } from '../services/sqlite.service';
 })
 export class HomePage {
 
-  public language: string;
-  public languages: string[];
+  public producto: string;
+  public productos: string[];
 
   constructor(
-    private sqlite: SqliteService
+    private sqlite: SqliteService,
+    private toastController: ToastController
   ) {
-    this.language = '';
-    this.languages = [];
+    this.producto = '';
+    this.productos = [];
   }
 
   // Al entrar, leemos la base de datos
@@ -23,37 +25,65 @@ export class HomePage {
     this.read();
   }
 
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, // Duración del toast en milisegundos
+      position: 'bottom' // Posición del toast en la pantalla
+    });
+    toast.present();
+  }
+
   create(){
     // Creamos un elemento en la base de datos
-    this.sqlite.create(this.language.toUpperCase()).then( (changes) =>{
-      console.log(changes);
-      console.log("Creado");
-      this.language = '';
-      this.read(); // Volvemos a leer
-    }).catch(err => {
-      console.error(err);
-      console.error("Error al crear");
-    })
+    /*if(this.producto && this.producto.trim() !== ''){
+      this.sqlite.create(this.producto.toUpperCase()).then( (changes) =>{
+        console.log(changes);
+        console.log("Creado");
+        this.producto = '';
+        this.read(); // Volvemos a leer
+      }).catch(err => {
+        console.error(err);
+        console.error("Error al crear");
+      })
+    }else {
+      console.warn("El producto no puede estar vacío");
+    }*/
+    
+    if (this.producto && this.producto.trim() !== '') {
+      this.sqlite.create(this.producto.toUpperCase()).then((changes) => {
+        console.log(changes);
+        console.log("Creado");
+        this.producto = '';
+        this.read(); // Volvemos a leer
+      }).catch(err => {
+        console.error(err);
+        console.error("Error al crear");
+      });
+    } else {
+      this.presentToast("El producto no puede estar vacío");
+    }
+    
   }
 
   read(){
     // Leemos los datos de la base de datos
-    this.sqlite.read().then( (languages: string[]) => {
-      this.languages = languages;
+    this.sqlite.read().then( (productos: string[]) => {
+      this.productos = productos;
       console.log("Leido");
-      console.log(this.languages);
+      console.log(this.productos);
     }).catch(err => {
       console.error(err);
       console.error("Error al leer");
     })
   }
   
-  update(language: string){
+  update(producto: string){
     // Actualizamos el elemento (language) por el nuevo elemento (this.language)
-    this.sqlite.update(this.language.toUpperCase(), language).then( (changes) => {
+    this.sqlite.update(this.producto.toUpperCase(), producto).then( (changes) => {
       console.log(changes);
       console.log("Actualizado");
-      this.language = '';
+      this.producto = '';
       this.read(); // Volvemos a leer
     }).catch(err => {
       console.error(err);
@@ -61,9 +91,9 @@ export class HomePage {
     })
   }
 
-  delete(language: string){
+  delete(producto: string){
     // Borramos el elemento
-    this.sqlite.delete(language).then( (changes) => {
+    this.sqlite.delete(producto).then( (changes) => {
       console.log(changes);
       console.log("Borrado");
       this.read(); // Volvemos a leer
