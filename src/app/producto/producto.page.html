@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      {{ esNuevo ? 'Agregar Producto' : 'Editar Producto' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form (ngSubmit)="guardarProducto()">
+    <ion-item>
+      <ion-label position="stacked">Nombre</ion-label>
+      <ion-input [(ngModel)]="producto.nombre" name="nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Presupuesto</ion-label>
+      <ion-input [(ngModel)]="producto.presupuesto" name="presupuesto"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Unidad</ion-label>
+      <ion-input [(ngModel)]="producto.unidad" name="unidad"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Cantidad</ion-label>
+      <ion-input [(ngModel)]="producto.cantidad" name="cantidad"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Valor Unitario</ion-label>
+      <ion-input [(ngModel)]="producto.valorUnitario" name="valorUnitario"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Proveedor</ion-label>
+      <ion-input [(ngModel)]="producto.proveedor" name="proveedor"></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit">{{ esNuevo ? 'Agregar' : 'Actualizar' }}</ion-button>
+  </form>
+  <ion-button *ngIf="!esNuevo" expand="full" color="danger" (click)="eliminarProducto()">Eliminar</ion-button>
+</ion-content>
+

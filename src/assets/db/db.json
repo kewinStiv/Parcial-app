@@ -1,17 +1,21 @@
 {
-    "database": "languages.db",
+    "database": "productos.db",
     "version": 1,
     "encrypted": false,
     "mode": "full",
     "tables": [
-        {
-            "name": "languages",
-            "schema": [
-                {
-                    "column": "name",
-                    "value": "TEXT NOT NULL PRIMARY KEY"
-                }
-            ]
-        }
+      {
+        "name": "productos",
+        "schema": [
+          { "column": "id", "value": "INTEGER PRIMARY KEY NOT NULL" },
+          { "column": "nombre", "value": "TEXT NOT NULL" },
+          { "column": "presupuesto", "value": "TEXT" },
+          { "column": "unidad", "value": "TEXT" },
+          { "column": "cantidad", "value": "TEXT" },
+          { "column": "valorUnitario", "value": "TEXT" },
+          { "column": "proveedor", "value": "TEXT" }
+        ]
+      }
     ]
-}
+  }
+  
